@@ -11,7 +11,7 @@
 
         <div class="row">
             <div class="input-field">
-                <select id="status" name="isLiquid">
+                <select id="status" name="isLiquid" onchange="toggleFields()">
                     <option value='false' {{#if_eq product.isLiquid false}}selected{{/if_eq}}>No</option>
                     <option value='true' {{#if_eq product.isLiquid true}}selected{{/if_eq}}>Yes</option>
                 </select>
@@ -57,16 +57,16 @@
 
         <div class="row">
             <input type="submit" value="Save" class="btn">
-            <a href="/products" class="btn orange">Cancel</a>
+            <a href="/products" class="btn grey">Cancel</a>
         </div>
     </form>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function(){
-        toggleFields();
+        loadFields();
     })
-    function toggleFields() {
+    function loadFields() {
         const liquid = document.getElementById('status').value === 'true';
         const priceField = document.getElementById('priceField');
         const priceOptions = document.getElementById('priceOptions');
@@ -74,6 +74,27 @@
         const plu = document.getElementById('plu')
 
         if (liquid) {
+            priceField.style.display = 'none';
+            plu.style.display = 'none'
+            priceOptions.style.display = 'block';
+            pluNumbers.style.display = 'block';
+        } else {
+            priceField.style.display = 'block';
+            plu.style.display = 'block'
+            priceOptions.style.display = 'none';
+            pluNumbers.style.display = 'none';
+        }
+    }
+
+
+    function toggleFields() {
+        const isLiquid = document.getElementById('status').value === 'true';
+        const priceField = document.getElementById('priceField');
+        const priceOptions = document.getElementById('priceOptions');
+        const pluNumbers = document.getElementById('pluNumbers');
+        const plu = document.getElementById('plu')
+
+        if (isLiquid) {
             priceField.style.display = 'none';
             plu.style.display = 'none'
             priceOptions.style.display = 'block';

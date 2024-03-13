@@ -20,7 +20,6 @@ const productSchema = new mongoose.Schema({
     },
     pluNumber: {
         type: String,
-        unique: true,
     },
     pluNumberPerQuart: {
         type: String,
@@ -33,22 +32,6 @@ const productSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     }, 
-});
-
-// Pre-save middleware
-productSchema.pre('save', function(next) {
-    // If the product is liquid, override price and pluNumber with liquid-specific values
-    if (this.isLiquid) {
-        this.price = null;  // Set to null or update accordingly
-        this.pluNumber = null;  // Set to null or update accordingly
-    } else {
-        // If the product is not liquid, set liquid-specific values to null
-        this.pricePerPint = null;
-        this.pricePerQuart = null;
-        this.pluNumberPerPint = null;
-        this.pluNumberPerQuart = null;
-    }
-    next();
 });
 
 const Product = mongoose.model('Product', productSchema);

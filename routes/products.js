@@ -46,14 +46,14 @@ router.post('/', ensureAuth, async (req, res) => {
         }else {
             //non liquid product
             productData.price = req.body.price;
-            productData.pluNumber = req.body.plu
+            productData.pluNumber = req.body.plu;
         }
         await Product.create(productData)
         res.redirect('/products')
 
     }catch(err){
         console.error(err)
-        res.redirect('error/404')
+        res.render('error/404')
     }
 })
 
